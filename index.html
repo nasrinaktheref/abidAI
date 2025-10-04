@@ -153,6 +153,21 @@
         </section>
     </div>
 
+    <!-- Coming Soon Modal -->
+    <div id="coming-soon-modal" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4 transition-opacity duration-300">
+        <div id="modal-content" class="bg-white dark:bg-slate-800 rounded-2xl shadow-xl w-full max-w-sm p-6 text-center transform transition-all duration-300 scale-95 opacity-0">
+            <div class="flex justify-center items-center mx-auto bg-indigo-100 dark:bg-indigo-900/50 rounded-full w-16 h-16">
+                <i data-lucide="construct" class="w-8 h-8 text-indigo-600 dark:text-indigo-300"></i>
+            </div>
+            <h3 class="text-2xl font-bold mt-4 text-slate-900 dark:text-white">Feature Coming Soon!</h3>
+            <p class="text-slate-600 dark:text-slate-400 mt-2">The "<span id="modal-tool-name" class="font-semibold"></span>" tool is currently under construction. We're working hard to bring it to you.</p>
+            <button id="modal-close-button" class="mt-6 w-full bg-indigo-600 text-white font-semibold py-2.5 px-4 rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-4 focus:ring-indigo-600/50 dark:focus:ring-offset-slate-800 transition">
+                Got It!
+            </button>
+        </div>
+    </div>
+
+
     <script>
         lucide.createIcons();
 
@@ -237,13 +252,13 @@
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(payload)
                 });
-                if (!response.ok) throw new Error(`API error: ${response.statusText}`);
+                if (!response.ok) throw new Error(`API error: ${response.statusText} (${response.status})`);
 
                 const result = await response.json();
                 const candidate = result.candidates?.[0];
+                const text = candidate?.content?.parts?.[0]?.text;
 
-                if (candidate && candidate.content?.parts?.[0]?.text) {
-                    const text = candidate.content.parts[0].text;
+                if (text) {
                     const groundingMetadata = candidate.groundingMetadata;
                     let sourcesHtml = '';
 
@@ -262,12 +277,13 @@
                     }
                     factFinderResults.innerHTML = `<p>${text.replace(/\n/g, '<br>')}</p>${sourcesHtml}`;
                 } else {
-                    throw new Error("No valid content received from the API.");
+                    // Handle cases where the API returns a valid response but no specific answer.
+                    factFinderResults.innerHTML = `<p class="text-amber-600 dark:text-amber-400">Sorry, I couldn't find a specific answer for that. Could you try rephrasing your question?</p>`;
                 }
 
             } catch (error) {
                 console.error("Error fetching fact:", error);
-                factFinderResults.innerHTML = `<p class="text-red-500 dark:text-red-400">Sorry, something went wrong. Please try again later. Error: ${error.message}</p>`;
+                factFinderResults.innerHTML = `<p class="text-red-500 dark:text-red-400">Sorry, a technical issue occurred. Please check your internet connection and try again. <br><small class="opacity-70">Details: ${error.message}</small></p>`;
             } finally {
                 factFinderLoader.classList.add('hidden');
                 factFinderButton.disabled = false;
@@ -288,6 +304,51 @@
             }
             throw new Error('Max retries reached');
         }
+
+        // --- NEW --- Coming Soon Modal Logic ---
+        const comingSoonModal = document.getElementById('coming-soon-modal');
+        const modalContent = document.getElementById('modal-content');
+        const modalCloseButton = document.getElementById('modal-close-button');
+        const modalToolName = document.getElementById('modal-tool-name');
+
+        // Select all tool cards that are NOT the fact-finder
+        const inactiveToolCards = document.querySelectorAll('.tool-card:not(#fact-finder)');
+
+        function openModal(toolName) {
+            modalToolName.textContent = toolName;
+            comingSoonModal.classList.remove('hidden');
+            // We use a tiny timeout to allow the display property to change, so transitions will work.
+            setTimeout(() => {
+                comingSoonModal.classList.remove('opacity-0');
+                modalContent.classList.remove('scale-95', 'opacity-0');
+            }, 10);
+        }
+
+        function closeModal() {
+            comingSoonModal.classList.add('opacity-0');
+            modalContent.classList.add('scale-95', 'opacity-0');
+            // Wait for the transition to finish before hiding the element
+            setTimeout(() => {
+                comingSoonModal.classList.add('hidden');
+            }, 300); // This duration should match the transition duration in CSS
+        }
+
+        inactiveToolCards.forEach(card => {
+            card.addEventListener('click', () => {
+                const toolName = card.querySelector('h2').textContent;
+                openModal(toolName);
+            });
+        });
+
+        modalCloseButton.addEventListener('click', closeModal);
+
+        comingSoonModal.addEventListener('click', (event) => {
+            // Close the modal if the user clicks on the background overlay
+            if (event.target === comingSoonModal) {
+                closeModal();
+            }
+        });
+
     </script>
 </body>
 </html>
