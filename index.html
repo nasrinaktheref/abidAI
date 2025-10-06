@@ -42,31 +42,52 @@
              border: 1px solid rgba(255, 255, 255, 0.1);
         }
         
-        #fact-finder-output .prose {
-             background-color: rgba(255, 255, 255, 0.7);
-             backdrop-filter: blur(10px);
-             -webkit-backdrop-filter: blur(10px);
-             border: 1px solid rgba(255, 255, 255, 0.2);
-             padding: 1.5rem;
-             border-radius: 0.75rem;
+        #ai-chat-output {
+            background-color: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 1rem;
+            border-radius: 0.75rem;
+            height: 400px;
+            overflow-y: auto;
         }
-        .dark #fact-finder-output .prose {
+        .dark #ai-chat-output {
              background-color: rgba(30, 41, 59, 0.7);
              border: 1px solid rgba(255, 255, 255, 0.1);
         }
+        .chat-message {
+            max-width: 80%;
+            padding: 0.75rem 1rem;
+            border-radius: 1rem;
+            margin-bottom: 0.5rem;
+            line-height: 1.5;
+        }
+        .user-message {
+            background-color: #4f46e5;
+            color: white;
+            border-bottom-right-radius: 0.25rem;
+            align-self: flex-end;
+            margin-left: auto;
+        }
+        .ai-message {
+            background-color: #e5e7eb;
+            color: #1f2937;
+            border-bottom-left-radius: 0.25rem;
+            align-self: flex-start;
+        }
+        .dark .ai-message {
+            background-color: #374151;
+            color: #f3f4f6;
+        }
 
         ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #f1f5f9; }
+        ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: #94a3b8; border-radius: 10px; }
         ::-webkit-scrollbar-thumb:hover { background: #64748b; }
-        .dark ::-webkit-scrollbar-track { background: #1e293b; }
         .dark ::-webkit-scrollbar-thumb { background: #475569; }
         .dark ::-webkit-scrollbar-thumb:hover { background: #64748b; }
 
-        #fact-finder-results a { color: #4f46e5; text-decoration: underline; }
-        #fact-finder-results a:hover { color: #3730a3; }
-        .dark #fact-finder-results a { color: #818cf8; }
-        .dark #fact-finder-results a:hover { color: #a78bfa; }
     </style>
 </head>
 <body class="text-slate-800 dark:text-slate-200 antialiased">
@@ -83,74 +104,71 @@
 
         <!-- Header -->
         <header class="text-center mb-12 pt-8">
+            <img src="https://github.com/nasrinaktheref/abidhasan/blob/9b8586cccc9f304e9ea671b964640e1240704da4/canvas.png?raw=true" alt="Abid's Profile Picture" class="w-24 h-24 rounded-full mx-auto mb-4 border-4 border-white dark:border-slate-700 shadow-lg" onerror="this.onerror=null;this.src='https://placehold.co/96x96/a5b4fc/4338ca?text=Abid';">
             <h1 class="text-5xl sm:text-6xl font-bold text-slate-900 dark:text-white drop-shadow-md">
                 ABID'S AI
             </h1>
             <p class="mt-4 text-lg text-slate-700 dark:text-slate-300 max-w-2xl mx-auto">
-                Your smart partner for learning and discovery. Choose a tool below to get started.
+                Apnar shekha o abishkarer jonno smart partner. Shuru korte nich theke ekta tool beche nin.
             </p>
         </header>
 
-        <!-- Tools Grid -->
-        <main class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <!-- Card Template -->
-            <div class="tool-card p-6 rounded-2xl shadow-lg cursor-pointer">
-                <div class="flex items-center space-x-4">
-                    <div class="bg-blue-500/20 p-3 rounded-xl"><i data-lucide="pen-square" class="w-7 h-7 text-blue-800 dark:text-blue-300"></i></div>
-                    <div><h2 class="text-xl font-bold text-slate-900 dark:text-white">Essay Writer</h2><p class="text-slate-600 dark:text-slate-400">Draft essays on any topic.</p></div>
+        <!-- Main Content: Tools Grid on left, Chat on right for larger screens -->
+        <div class="grid grid-cols-1 lg:grid-cols-5 gap-8">
+            
+            <!-- Tools Grid (Left Column) -->
+            <main class="lg:col-span-3 grid grid-cols-1 sm:grid-cols-2 gap-8">
+                <div class="tool-card p-6 rounded-2xl shadow-lg cursor-pointer">
+                    <div class="flex items-center space-x-4">
+                        <div class="bg-blue-500/20 p-3 rounded-xl"><i data-lucide="pen-square" class="w-7 h-7 text-blue-800 dark:text-blue-300"></i></div>
+                        <div><h2 class="text-xl font-bold text-slate-900 dark:text-white">Rochona Lekhok</h2><p class="text-slate-600 dark:text-slate-400">Je kono bishoye rochona.</p></div>
+                    </div>
+                </div>
+                <div class="tool-card p-6 rounded-2xl shadow-lg cursor-pointer">
+                    <div class="flex items-center space-x-4">
+                        <div class="bg-green-500/20 p-3 rounded-xl"><i data-lucide="calculator" class="w-7 h-7 text-green-800 dark:text-green-300"></i></div>
+                        <div><h2 class="text-xl font-bold text-slate-900 dark:text-white">Shomossha Shomadhankari</h2><p class="text-slate-600 dark:text-slate-400">Jotil shomosshar shomadhan.</p></div>
+                    </div>
+                </div>
+                <div class="tool-card p-6 rounded-2xl shadow-lg cursor-pointer">
+                    <div class="flex items-center space-x-4">
+                        <div class="bg-purple-500/20 p-3 rounded-xl"><i data-lucide="book-text" class="w-7 h-7 text-purple-800 dark:text-purple-300"></i></div>
+                        <div><h2 class="text-xl font-bold text-slate-900 dark:text-white">Saransho Kori</h2><p class="text-slate-600 dark:text-slate-400">Lekha shonkhipto korun.</p></div>
+                    </div>
+                </div>
+                 <div class="tool-card p-6 rounded-2xl shadow-lg cursor-pointer">
+                    <div class="flex items-center space-x-4">
+                        <div class="bg-yellow-500/20 p-3 rounded-xl"><i data-lucide="languages" class="w-7 h-7 text-yellow-800 dark:text-yellow-300"></i></div>
+                        <div><h2 class="text-xl font-bold text-slate-900 dark:text-white">Onubadok</h2><p class="text-slate-600 dark:text-slate-400">Je kono bhasha onubad.</p></div>
+                    </div>
+                </div>
+                <div class="sm:col-span-2 tool-card p-6 rounded-2xl shadow-lg cursor-pointer">
+                    <div class="flex items-center space-x-4">
+                        <div class="bg-pink-500/20 p-3 rounded-xl"><i data-lucide="lightbulb" class="w-7 h-7 text-pink-800 dark:text-pink-300"></i></div>
+                        <div><h2 class="text-xl font-bold text-slate-900 dark:text-white">Quiz Toirikari</h2><p class="text-slate-600 dark:text-slate-400">Lekha theke quiz toiri.</p></div>
+                    </div>
+                </div>
+            </main>
+            
+            <!-- AI Chat (Right Column) -->
+            <div id="ai-chat" class="lg:col-span-2 tool-card p-6 rounded-2xl shadow-lg flex flex-col h-[60vh] lg:h-auto">
+                 <div class="flex items-center space-x-4 mb-4 flex-shrink-0">
+                    <div class="bg-indigo-500/20 p-3 rounded-xl"><i data-lucide="message-circle" class="w-7 h-7 text-indigo-800 dark:text-indigo-300"></i></div>
+                    <div><h2 class="text-xl font-bold text-slate-900 dark:text-white">AI Chat</h2><p class="text-slate-600 dark:text-slate-400">Je kono proshner uttor janun.</p></div>
+                </div>
+                <div id="ai-chat-output" class="flex-grow flex flex-col space-y-2 mb-4">
+                    <!-- Chat messages will be appended here -->
+                </div>
+                <div class="space-y-2 flex-shrink-0">
+                    <div class="flex space-x-2">
+                        <input id="ai-chat-input" type="text" placeholder="Ekhane proshno korun..." class="w-full px-4 py-2 bg-white/50 dark:bg-slate-800/50 border border-slate-300/50 dark:border-slate-600/50 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition placeholder:text-slate-500 dark:placeholder:text-slate-400">
+                        <button id="ai-chat-button" class="bg-indigo-600 text-white font-semibold p-2.5 rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-4 focus:ring-indigo-600/50 dark:focus:ring-offset-slate-900 transition flex items-center justify-center shadow-lg hover:shadow-indigo-500/50">
+                            <i data-lucide="send" class="w-5 h-5"></i>
+                        </button>
+                    </div>
                 </div>
             </div>
-            <div class="tool-card p-6 rounded-2xl shadow-lg cursor-pointer">
-                <div class="flex items-center space-x-4">
-                    <div class="bg-green-500/20 p-3 rounded-xl"><i data-lucide="calculator" class="w-7 h-7 text-green-800 dark:text-green-300"></i></div>
-                    <div><h2 class="text-xl font-bold text-slate-900 dark:text-white">Problem Solver</h2><p class="text-slate-600 dark:text-slate-400">Solve complex problems.</p></div>
-                </div>
-            </div>
-            <div class="tool-card p-6 rounded-2xl shadow-lg cursor-pointer">
-                <div class="flex items-center space-x-4">
-                    <div class="bg-purple-500/20 p-3 rounded-xl"><i data-lucide="book-text" class="w-7 h-7 text-purple-800 dark:text-purple-300"></i></div>
-                    <div><h2 class="text-xl font-bold text-slate-900 dark:text-white">Summarizer</h2><p class="text-slate-600 dark:text-slate-400">Condense articles.</p></div>
-                </div>
-            </div>
-             <div class="tool-card p-6 rounded-2xl shadow-lg cursor-pointer">
-                <div class="flex items-center space-x-4">
-                    <div class="bg-yellow-500/20 p-3 rounded-xl"><i data-lucide="languages" class="w-7 h-7 text-yellow-800 dark:text-yellow-300"></i></div>
-                    <div><h2 class="text-xl font-bold text-slate-900 dark:text-white">Translator</h2><p class="text-slate-600 dark:text-slate-400">Translate any text.</p></div>
-                </div>
-            </div>
-            <div class="tool-card p-6 rounded-2xl shadow-lg cursor-pointer">
-                <div class="flex items-center space-x-4">
-                    <div class="bg-pink-500/20 p-3 rounded-xl"><i data-lucide="lightbulb" class="w-7 h-7 text-pink-800 dark:text-pink-300"></i></div>
-                    <div><h2 class="text-xl font-bold text-slate-900 dark:text-white">Quiz Generator</h2><p class="text-slate-600 dark:text-slate-400">Create quizzes from text.</p></div>
-                </div>
-            </div>
-
-            <!-- Fact Finder (Functional) Card -->
-            <div id="fact-finder" class="md:col-span-2 lg:col-span-1 tool-card p-6 rounded-2xl shadow-lg">
-                 <div class="flex items-center space-x-4 mb-4">
-                    <div class="bg-indigo-500/20 p-3 rounded-xl"><i data-lucide="search" class="w-7 h-7 text-indigo-800 dark:text-indigo-300"></i></div>
-                    <div><h2 class="text-xl font-bold text-slate-900 dark:text-white">Fact Finder</h2><p class="text-slate-600 dark:text-slate-400">Get quick, reliable answers.</p></div>
-                </div>
-                <div class="space-y-4">
-                    <input id="fact-finder-input" type="text" placeholder="e.g., How does photosynthesis work?" class="w-full px-4 py-2 bg-white/50 dark:bg-slate-800/50 border border-slate-300/50 dark:border-slate-600/50 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition placeholder:text-slate-500 dark:placeholder:text-slate-400">
-                    <button id="fact-finder-button" class="w-full bg-indigo-600 text-white font-semibold py-2.5 px-4 rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-4 focus:ring-indigo-600/50 dark:focus:ring-offset-slate-900 transition flex items-center justify-center shadow-lg hover:shadow-indigo-500/50">
-                        Search
-                    </button>
-                </div>
-            </div>
-        </main>
-        
-        <!-- Fact Finder Results Section -->
-        <section id="fact-finder-output" class="mt-12 hidden pb-10">
-            <h3 class="text-3xl font-bold text-slate-900 dark:text-white mb-6 text-center">Result</h3>
-            <div id="fact-finder-loader" class="hidden my-4 flex justify-center items-center space-x-2">
-                <div class="w-4 h-4 rounded-full bg-indigo-500 animate-pulse"></div>
-                <div class="w-4 h-4 rounded-full bg-indigo-500 animate-pulse [animation-delay:0.2s]"></div>
-                <div class="w-4 h-4 rounded-full bg-indigo-500 animate-pulse [animation-delay:0.4s]"></div>
-                <span class="text-slate-600 dark:text-slate-400 ml-2">Searching for the answer...</span>
-            </div>
-            <div id="fact-finder-results" class="prose prose-slate dark:prose-invert max-w-4xl mx-auto text-slate-700 dark:text-slate-300"></div>
-        </section>
+        </div>
     </div>
 
     <!-- Coming Soon Modal -->
@@ -159,14 +177,13 @@
             <div class="flex justify-center items-center mx-auto bg-indigo-100 dark:bg-indigo-900/50 rounded-full w-16 h-16">
                 <i data-lucide="construct" class="w-8 h-8 text-indigo-600 dark:text-indigo-300"></i>
             </div>
-            <h3 class="text-2xl font-bold mt-4 text-slate-900 dark:text-white">Feature Coming Soon!</h3>
-            <p class="text-slate-600 dark:text-slate-400 mt-2">The "<span id="modal-tool-name" class="font-semibold"></span>" tool is currently under construction. We're working hard to bring it to you.</p>
+            <h3 class="text-2xl font-bold mt-4 text-slate-900 dark:text-white">Feature Shighroi Ashche!</h3>
+            <p class="text-slate-600 dark:text-slate-400 mt-2">"<span id="modal-tool-name" class="font-semibold"></span>" tool-ti ekhon toiri hocche. Amra eti apnar kache niye ashar jonno kaaj korchi.</p>
             <button id="modal-close-button" class="mt-6 w-full bg-indigo-600 text-white font-semibold py-2.5 px-4 rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-4 focus:ring-indigo-600/50 dark:focus:ring-offset-slate-800 transition">
-                Got It!
+                Thik Ache!
             </button>
         </div>
     </div>
-
 
     <script>
         lucide.createIcons();
@@ -207,42 +224,66 @@
         });
 
 
-        // Fact Finder Logic (unchanged from previous version)
-        const factFinderInput = document.getElementById('fact-finder-input');
-        const factFinderButton = document.getElementById('fact-finder-button');
-        const factFinderOutput = document.getElementById('fact-finder-output');
-        const factFinderLoader = document.getElementById('fact-finder-loader');
-        const factFinderResults = document.getElementById('fact-finder-results');
+        // --- NEW AI Chat Logic ---
+        const chatInput = document.getElementById('ai-chat-input');
+        const chatButton = document.getElementById('ai-chat-button');
+        const chatOutput = document.getElementById('ai-chat-output');
+        
+        let chatHistory = [];
 
-        factFinderButton.addEventListener('click', findFact);
-        factFinderInput.addEventListener('keyup', (event) => {
+        chatButton.addEventListener('click', sendMessage);
+        chatInput.addEventListener('keyup', (event) => {
             if (event.key === 'Enter') {
-                findFact();
+                sendMessage();
             }
         });
 
-        async function findFact() {
-            const userQuery = factFinderInput.value.trim();
-            if (!userQuery) {
-                factFinderResults.innerHTML = '<p class="text-red-500">Please enter a question.</p>';
-                factFinderOutput.classList.remove('hidden');
-                return;
-            }
+        function appendMessage(message, sender) {
+            const messageDiv = document.createElement('div');
+            messageDiv.classList.add('chat-message', sender === 'user' ? 'user-message' : 'ai-message');
+            messageDiv.innerHTML = message.replace(/\n/g, '<br>'); // Simple markdown for newlines
+            chatOutput.appendChild(messageDiv);
+            chatOutput.scrollTop = chatOutput.scrollHeight; // Auto-scroll to bottom
+        }
 
-            factFinderOutput.classList.remove('hidden');
-            factFinderLoader.classList.remove('hidden');
-            factFinderResults.innerHTML = '';
-            factFinderButton.disabled = true;
-            factFinderButton.innerHTML = `<div class="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>`;
+        function showTypingIndicator() {
+            const typingDiv = document.createElement('div');
+            typingDiv.id = 'typing-indicator';
+            typingDiv.classList.add('chat-message', 'ai-message');
+            typingDiv.innerHTML = `<div class="flex items-center space-x-1">
+                <div class="w-2 h-2 rounded-full bg-slate-500 animate-pulse"></div>
+                <div class="w-2 h-2 rounded-full bg-slate-500 animate-pulse [animation-delay:0.2s]"></div>
+                <div class="w-2 h-2 rounded-full bg-slate-500 animate-pulse [animation-delay:0.4s]"></div>
+            </div>`;
+            chatOutput.appendChild(typingDiv);
+            chatOutput.scrollTop = chatOutput.scrollHeight;
+        }
+
+        function removeTypingIndicator() {
+            const indicator = document.getElementById('typing-indicator');
+            if(indicator) {
+                indicator.remove();
+            }
+        }
+
+        async function sendMessage() {
+            const userQuery = chatInput.value.trim();
+            if (!userQuery) return;
+
+            appendMessage(userQuery, 'user');
+            chatHistory.push({ role: 'user', parts: [{ text: userQuery }] });
+            chatInput.value = '';
+            chatButton.disabled = true;
+            
+            showTypingIndicator();
 
             const apiKey = "";
             const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
 
             const payload = {
-                contents: [{ parts: [{ text: userQuery }] }],
-                tools: [{ "google_search": {} }],
+                contents: chatHistory,
                 systemInstruction: {
-                    parts: [{ text: "You are an educational assistant. Provide a clear, concise, and accurate answer to the user's question, formatted in simple HTML with paragraphs. Cite your sources." }]
+                    parts: [{ text: "You are a helpful and friendly AI assistant named ABID'S AI. Answer the user's questions clearly and concisely. You can converse in Bengali or English." }]
                 },
             };
 
@@ -255,39 +296,21 @@
                 if (!response.ok) throw new Error(`API error: ${response.statusText} (${response.status})`);
 
                 const result = await response.json();
-                const candidate = result.candidates?.[0];
-                const text = candidate?.content?.parts?.[0]?.text;
-
+                const text = result.candidates?.[0]?.content?.parts?.[0]?.text;
+                
                 if (text) {
-                    const groundingMetadata = candidate.groundingMetadata;
-                    let sourcesHtml = '';
-
-                    if (groundingMetadata && groundingMetadata.groundingAttributions) {
-                        const sources = groundingMetadata.groundingAttributions
-                            .map(attr => ({ uri: attr.web?.uri, title: attr.web?.title }))
-                            .filter(source => source.uri && source.title);
-                        
-                        if (sources.length > 0) {
-                            sourcesHtml = '<hr class="my-4 border-slate-300 dark:border-slate-600"><h4 class="font-semibold text-lg mt-4 mb-2">Sources:</h4><ul class="list-disc pl-5 space-y-1">';
-                            sources.forEach(source => {
-                                sourcesHtml += `<li><a href="${source.uri}" target="_blank" rel="noopener noreferrer" class="font-medium">${source.title}</a></li>`;
-                            });
-                            sourcesHtml += '</ul>';
-                        }
-                    }
-                    factFinderResults.innerHTML = `<p>${text.replace(/\n/g, '<br>')}</p>${sourcesHtml}`;
+                    appendMessage(text, 'ai');
+                    chatHistory.push({ role: 'model', parts: [{ text: text }] });
                 } else {
-                    // Handle cases where the API returns a valid response but no specific answer.
-                    factFinderResults.innerHTML = `<p class="text-amber-600 dark:text-amber-400">Sorry, I couldn't find a specific answer for that. Could you try rephrasing your question?</p>`;
+                    appendMessage("Ami maf chaichi, ekta shomossha hoyeche. Abar cheshta korun.", 'ai');
                 }
-
             } catch (error) {
-                console.error("Error fetching fact:", error);
-                factFinderResults.innerHTML = `<p class="text-red-500 dark:text-red-400">Sorry, a technical issue occurred. Please check your internet connection and try again. <br><small class="opacity-70">Details: ${error.message}</small></p>`;
+                console.error("Error during chat:", error);
+                appendMessage(`Sorry, a technical issue occurred: ${error.message}`, 'ai');
             } finally {
-                factFinderLoader.classList.add('hidden');
-                factFinderButton.disabled = false;
-                factFinderButton.textContent = 'Search';
+                removeTypingIndicator();
+                chatButton.disabled = false;
+                chatInput.focus();
             }
         }
         
@@ -305,19 +328,17 @@
             throw new Error('Max retries reached');
         }
 
-        // --- NEW --- Coming Soon Modal Logic ---
+        // --- Coming Soon Modal Logic ---
         const comingSoonModal = document.getElementById('coming-soon-modal');
         const modalContent = document.getElementById('modal-content');
         const modalCloseButton = document.getElementById('modal-close-button');
         const modalToolName = document.getElementById('modal-tool-name');
 
-        // Select all tool cards that are NOT the fact-finder
-        const inactiveToolCards = document.querySelectorAll('.tool-card:not(#fact-finder)');
+        const inactiveToolCards = document.querySelectorAll('main .tool-card');
 
         function openModal(toolName) {
             modalToolName.textContent = toolName;
             comingSoonModal.classList.remove('hidden');
-            // We use a tiny timeout to allow the display property to change, so transitions will work.
             setTimeout(() => {
                 comingSoonModal.classList.remove('opacity-0');
                 modalContent.classList.remove('scale-95', 'opacity-0');
@@ -327,10 +348,9 @@
         function closeModal() {
             comingSoonModal.classList.add('opacity-0');
             modalContent.classList.add('scale-95', 'opacity-0');
-            // Wait for the transition to finish before hiding the element
             setTimeout(() => {
                 comingSoonModal.classList.add('hidden');
-            }, 300); // This duration should match the transition duration in CSS
+            }, 300);
         }
 
         inactiveToolCards.forEach(card => {
@@ -341,14 +361,11 @@
         });
 
         modalCloseButton.addEventListener('click', closeModal);
-
         comingSoonModal.addEventListener('click', (event) => {
-            // Close the modal if the user clicks on the background overlay
-            if (event.target === comingSoonModal) {
-                closeModal();
-            }
+            if (event.target === comingSoonModal) closeModal();
         });
-
     </script>
 </body>
 </html>
+
+
