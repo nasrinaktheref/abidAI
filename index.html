@@ -231,13 +231,6 @@
         
         let chatHistory = [];
 
-        chatButton.addEventListener('click', sendMessage);
-        chatInput.addEventListener('keyup', (event) => {
-            if (event.key === 'Enter') {
-                sendMessage();
-            }
-        });
-
         function appendMessage(message, sender) {
             const messageDiv = document.createElement('div');
             messageDiv.classList.add('chat-message', sender === 'user' ? 'user-message' : 'ai-message');
@@ -245,6 +238,19 @@
             chatOutput.appendChild(messageDiv);
             chatOutput.scrollTop = chatOutput.scrollHeight; // Auto-scroll to bottom
         }
+
+        // Add initial welcome message
+        const initialMessage = "Assalamu Alaikum! Ami ABID'S AI. Apni kemon achen? Amake je kono proshno jiggesh korte paren.";
+        appendMessage(initialMessage, 'ai');
+        chatHistory.push({ role: 'model', parts: [{ text: initialMessage }] });
+
+
+        chatButton.addEventListener('click', sendMessage);
+        chatInput.addEventListener('keyup', (event) => {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        });
 
         function showTypingIndicator() {
             const typingDiv = document.createElement('div');
@@ -306,7 +312,13 @@
                 }
             } catch (error) {
                 console.error("Error during chat:", error);
-                appendMessage(`Sorry, a technical issue occurred: ${error.message}`, 'ai');
+                let userFriendlyMessage = "Ami maf chaichi, ekta technical shomossha hoyeche. Kichu shomoy por abar cheshta korun."; // Default message
+                if (error.message && error.message.includes("403")) {
+                    userFriendlyMessage = "Ami maf chaichi, shongjog sthapone ekta onumoti-jonito shomossha (Permission Error) dekha diyeche. Eti shadharonoto platform-er shomossha. Kichu shomoy por abar cheshta korun.";
+                } else if (error.message) {
+                    userFriendlyMessage = `Ami maf chaichi, ekta technical shomossha dekha diyeche: ${error.message}`;
+                }
+                appendMessage(userFriendlyMessage, 'ai');
             } finally {
                 removeTypingIndicator();
                 chatButton.disabled = false;
@@ -367,5 +379,4 @@
     </script>
 </body>
 </html>
-
 
